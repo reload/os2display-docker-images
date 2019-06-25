@@ -57,6 +57,10 @@ RUN chmod -R g+w web/uploads app/cache app/logs
 USER root
 ENV APP_ENV=prod
 
+# Create socket fpm can be piped to
+ENV LOG_STREAM="/tmp/stdout"
+RUN mkfifo $LOG_STREAM && chmod 777 $LOG_STREAM
+
 # We default to FPM.
 CMD ["/usr/local/bin/fpm-entrypoint.sh"]
 EXPOSE 9000
