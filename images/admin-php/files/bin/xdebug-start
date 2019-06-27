@@ -2,18 +2,20 @@
 set -euo pipefail
 IFS=$'\n\t'
 
-SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-
 # Disable is done on exit, this means that no matter what happens (eg the
 # user doing a ^C) we will attempt to re-disable xdebug.
 function disable {
     echo '- disabling xdebug' && \
     phpdismod xdebug
+    phpdismod xdebug-remote-autostart
+
     if should_use_internal_hostname; then
         phpdismod xdebug-use-docker-remote-host
     fi
-    echo '- reloading php-fpm'
-    pkill -HUP 'php-fpm'
+    if pgrep php-fpm; then
+        echo '- reloading php-fpm'
+        pkill -HUP 'php-fpm'
+    fi
     exit $?
 }
 
@@ -38,8 +40,13 @@ if should_use_internal_hostname; then
     echo '- setting host.docker.internal as remote_host'
 fi
 
-echo '- reloading php-fpm'
-pkill -HUP 'php-fpm'
+if pgrep php-fpm; then
+    echo '- reloading php-fpm'
+    pkill -HUP 'php-fpm'
+else 
+    echo '- php-fpm not found, assuming cli and settings remote_autostart=1'
+    phpenmod xdebug-remote-autostart
+fi
 
 # Then we prompt the user.
 echo ""
