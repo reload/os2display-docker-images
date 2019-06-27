@@ -49,10 +49,10 @@ RUN phpdismod xdebug
 RUN phpenmod os2display-php-settings
 
 RUN mkdir -p web/uploads
-RUN mkdir -p app/cache
-RUN mkdir -p app/logs
-RUN chown -R www-data:www-data web/uploads app/cache app/logs
-RUN chmod -R g+w web/uploads app/cache app/logs
+RUN mkdir -p var/cache
+RUN mkdir -p var/logs
+RUN chown -R www-data:www-data web/uploads var/cache var/logs
+RUN chmod -R g+w web/uploads var/cache var/logs
 
 USER root
 ENV APP_ENV=prod
@@ -67,4 +67,3 @@ EXPOSE 9000
 
 # Use /usr/local/bin/jobber-entrypoint.sh if the container act as cron-
 # runner.
-
