@@ -7,7 +7,7 @@ ARG os2display_image_repository=os2display
 FROM ${os2display_image_repository}/os2display-php-base:latest
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
-      php7.2-fpm \
+      php7.3-fpm \
     && \
     curl -Lo /tmp/jobber_1.4.0-pr.1-1_amd64_ubuntu16.deb https://github.com/dshearer/jobber/releases/download/v1.4.0-pr.1/jobber_1.4.0-pr.1-1_amd64_ubuntu16.deb && \
     dpkg -i /tmp/jobber_1.4.0-pr.1-1_amd64_ubuntu16.deb && \
@@ -30,8 +30,8 @@ RUN test -d /run/php || mkdir /run/php
 COPY files/.jobber /root/
 RUN chmod a-rwx /root/.jobber && chmod u+rw /root/.jobber
 
-COPY config/www.conf /etc/php/7.2/fpm/pool.d/
-COPY config/php-fpm.conf /etc/php/7.2/fpm/
+COPY config/pool.d/ /etc/php/7.3/fpm/pool.d/
+COPY config/php-fpm.conf /etc/php/7.3/fpm/
 
 COPY files/etc/ /etc/
 COPY files/bin/ /usr/local/bin/
@@ -56,10 +56,6 @@ RUN chmod -R g+w web/uploads var/cache var/logs
 
 USER root
 ENV APP_ENV=prod
-
-# Create socket fpm can be piped to
-ENV LOG_STREAM="/tmp/stdout"
-RUN mkfifo $LOG_STREAM && chmod 777 $LOG_STREAM
 
 # We default to FPM.
 CMD ["/usr/local/bin/fpm-entrypoint.sh"]
