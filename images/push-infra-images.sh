@@ -13,4 +13,5 @@ docker push "${MAIN_IMAGE_REPOSITORY}/os2display-redis:${REDIS_SOURCE_TAG}-${RED
 docker push "${MAIN_IMAGE_REPOSITORY}/os2display-search:${SEARCH_SOURCE_TAG}-${SEARCH_BUILD_TAG}"
 docker push "${MAIN_IMAGE_REPOSITORY}/os2display-middleware:${MIDDLEWARE_SOURCE_TAG}-${MIDDLEWARE_BUILD_TAG}"
 docker push "${MAIN_IMAGE_REPOSITORY}/os2display-screen:${SCREEN_SOURCE_TAG}-${SCREEN_BUILD_TAG}"
+docker push "${MAIN_IMAGE_REPOSITORY}/os2display-admin-db-backup:${MARIADB_SOURCE_TAG}-${ADMIN_DB_BACKUP_BUILD_TAG}"
 

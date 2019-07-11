@@ -81,7 +81,8 @@ docker build \
  --build-arg revison="${SCREEN_SOURCE_TAG}" \
  screen
 
-
-
-
-
+docker build \
+ -t ${MAIN_IMAGE_REPOSITORY}/os2display-admin-db-backup:"${MARIADB_SOURCE_TAG}-${ADMIN_DB_BACKUP_BUILD_TAG}" \
+ -f admin-db-backup/Dockerfile \
+ --build-arg mariadb_source_tag="${MARIADB_SOURCE_TAG}" \
+ admin-db-backup
