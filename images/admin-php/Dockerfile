@@ -41,6 +41,7 @@ RUN chmod +x /usr/local/bin/xdebug-start
 RUN chmod +x /usr/local/bin/jobber-notify.sh
 RUN chmod +x /usr/local/bin/jobber-entrypoint.sh
 RUN chmod +x /usr/local/bin/fpm-entrypoint.sh
+RUN chmod +x /usr/local/bin/migrate-entrypoint.sh
 RUN chmod +x /usr/local/bin/run_os2display_cron.sh
 
 # Don't enable xdebug pr. default.
