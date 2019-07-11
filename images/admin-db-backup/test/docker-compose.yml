@@ -1,0 +1,28 @@
+version: "3.7"
+
+services: 
+  db:
+    image: mariadb:10.3
+    ports:
+      - '3306:3306'
+    volumes:
+      - './test.sql:/docker-entrypoint-initdb.d/test.sql'
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: db
+      MYSQL_USER: db
+      MYSQL_PASSWORD: db
+      
+  backup:
+    build: ../
+    depends_on:
+      - db
+    volumes:
+      - './keys.json:/tmp/keys.json'
+    environment: 
+      AUTH_JSON: /tmp/keys.json
+      MYSQL_HOST: db
+      MYSQL_DATABASE: db
+      MYSQL_USER: db
+      MYSQL_PASSWORD: db
+      GS_URL: ${GS_URL}
