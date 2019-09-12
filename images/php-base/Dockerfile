@@ -27,14 +27,6 @@ RUN apt-get update && \
       /tmp/* \
       /var/tmp/*
 
-# Install composer 1.8.6 using the latest installer.
-# We compare the downloaded installer with a hash from a second source to reduce
-# the chanche we're downloading a compromised installer.
-RUN curl -o /tmp/composer-installer https://getcomposer.org/installer && \
-  curl -o /tmp/composer-installer.sig https://composer.github.io/installer.sig &&  \
-  php -r "if (hash('SHA384', file_get_contents('/tmp/composer-installer')) !== trim(file_get_contents('/tmp/composer-installer.sig'))) { unlink('/tmp/composer-installer'); echo 'Invalid installer' . PHP_EOL; exit(1); }" && \
-  php /tmp/composer-installer --version=1.8.6 --filename=composer --install-dir=/usr/local/bin && \
-  php -r "unlink('/tmp/composer-installer');" && \
-  php -r "unlink('/tmp/composer-installer.sig');"
+COPY --from=composer:1.9.0 /usr/bin/composer /usr/bin/composer
 RUN composer global require hirak/prestissimo
 RUN composer global require rubenrua/symfony-clean-tags-composer-plugin
