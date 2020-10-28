@@ -6,4 +6,4 @@ FROM ${os2display_image_repository}/os2display-nginx-base
 
 WORKDIR /var/www/admin
 
-COPY config/admin.conf /etc/nginx/sites-enabled/
+COPY config/admin.conf /etc/nginx/conf.d/

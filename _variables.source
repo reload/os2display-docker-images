@@ -16,9 +16,9 @@ PHP_BASE_TAG=latest
 NGINX_BASE_TAG=latest
 NODE_BASE_TAG=latest
 
-# Support images that does not contain any project-code, thus we track eg. 
+# Support images that does not contain any project-code, thus we track eg.
 # configuration-changes and general software updates via a "build" tag.
-ADMIN_NGINX_BUILD_TAG=reload-0.1.0
+ADMIN_NGINX_BUILD_TAG=reload-0.2.0
 
 # All images has a "build-tag", som have a "source-tag". A Source-tag references
 # the version of the project the image hosts (eg. elasticsearch).

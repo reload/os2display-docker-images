@@ -17,7 +17,7 @@ FROM ${os2display_image_repository}/os2display-nginx-base
 
 WORKDIR /var/www/screen
 
-COPY config/screen.conf /etc/nginx/sites-enabled/
+COPY config/screen.conf /etc/nginx/conf.d/
 
 COPY --from=fetcher /var/www/screen /var/www/screen
 COPY config/config.js /var/www/screen/app/config.js
