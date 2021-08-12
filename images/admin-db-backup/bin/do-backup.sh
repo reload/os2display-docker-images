@@ -18,5 +18,8 @@ check_empty "AUTH_JSON" "${AUTH_JSON:-}"
 gcloud auth activate-service-account --key-file "${AUTH_JSON}"
 TIMESTAMP=$(date +"%Y-%m-%d_%H-%M-%S")
 DESTINATION="${DUMP_PREFIX:-backup}-${TIMESTAMP}.sql.gz"
-time mysqldump -u${MYSQL_USER} -p${MYSQL_PASSWORD} -h${MYSQL_HOST} ${MYSQL_DATABASE}| gzip > "${DESTINATION}"
+# We dump using a single transaction to avoid having to lock tables.
+# This is safe as we're using InnoDB as the database engine (default).
+# https://dev.mysql.com/doc/refman/8.0/en/mysqldump.html#option_mysqldump_single-transaction
+time mysqldump --single-transaction -u${MYSQL_USER} -p${MYSQL_PASSWORD} -h${MYSQL_HOST} ${MYSQL_DATABASE}| gzip > "${DESTINATION}"
 gsutil cp "${DESTINATION}" "${GS_URL}"
